@@ -1,9 +1,11 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {setAppStatusAC} from "app/app-reducer";
-import {authAPI, FieldErrorType, LoginParamsType} from "api/todolists-api";
 import {clearTasksAndTodolists} from "common/actions/common.actions";
 import {handleServerAppError, handleServerNetworkError} from "utils/error-utils";
 import {AxiosError} from "axios";
+import {authAPI} from "features/Auth/authApi";
+import {FieldErrorType} from "features/todolistsList/api/todolistsApi/todolistsApi.types";
+import {LoginParamsType} from "features/Auth/authApi.types";
 
 ////////// THUNKS
 export const loginTC = createAsyncThunk<

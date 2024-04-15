@@ -1,8 +1,13 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {clearTasksAndTodolists} from "common/actions/common.actions";
-import {addTaskTC, fetchTasksTC, removeTaskTC, updateTaskTC} from "features/TodolistsList/tasks-actions";
-import {TaskPriorities, TaskStatuses, TaskType} from "api/todolists-api";
-import {addTodolistTC, fetchTodolistsTC, removeTodolistTC} from "features/TodolistsList/todolists-actions";
+import {addTask, fetchTasks, removeTask, updateTask} from "features/todolistsList/model/tasks/tasksActions";
+import {
+    addTodolist,
+    fetchTodolists,
+    removeTodolist
+} from "features/todolistsList/model/todolists/todolistsActions";
+
+import {TaskPriorities, TaskStatuses, TaskType} from "features/todolistsList/api/tasksApi/tasksApi.types";
 
 // const initialState: TasksStateType = {}
 
@@ -12,17 +17,17 @@ const slice = createSlice({
     reducers: {},
     extraReducers: builder => {
         builder
-            .addCase(fetchTasksTC.fulfilled, (state, action) => {
+            .addCase(fetchTasks.fulfilled, (state, action) => {
                 state[action.payload.todolistId] = action.payload.tasks
             })
-            .addCase(addTodolistTC.fulfilled, (state, action) => {
+            .addCase(addTodolist.fulfilled, (state, action) => {
                     state[action.payload.todolist.id] = []
                 }
             )
-            .addCase(removeTodolistTC.fulfilled, (state, action) => {
+            .addCase(removeTodolist.fulfilled, (state, action) => {
                 delete state[action.payload.id]
             })
-            .addCase(fetchTodolistsTC.fulfilled, (state, action) => {
+            .addCase(fetchTodolists.fulfilled, (state, action) => {
                 action.payload.todolists.forEach(tl => {
                     state[tl.id] = []
                 })
@@ -30,7 +35,7 @@ const slice = createSlice({
             .addCase(clearTasksAndTodolists, () => {
                 return {}
             })
-            .addCase(removeTaskTC.fulfilled, (state, action) => {
+            .addCase(removeTask.fulfilled, (state, action) => {
                 const tasks = state[action.payload.todolistId]
                 const index = tasks.findIndex(t =>
                     t.id === action.payload.taskId
@@ -39,13 +44,13 @@ const slice = createSlice({
                     tasks.splice(index, 1)
                 }
             })
-            .addCase(addTaskTC.fulfilled, (state, action) => {
+            .addCase(addTask.fulfilled, (state, action) => {
                 if (action.payload) {
                     const tasks = state[action.payload.task.todoListId]
                     tasks.unshift(action.payload.task)
                 }
             })
-            .addCase(updateTaskTC.fulfilled, (state, action) => {
+            .addCase(updateTask.fulfilled, (state, action) => {
                 if (action.payload) {
                     const tasks = state[action.payload.todolistId]
                     const index = tasks.findIndex(t =>
@@ -56,11 +61,15 @@ const slice = createSlice({
                     }
                 }
             })
+    },
+    selectors: {
+        selectTaskSlice: (state) => state
     }
 })
 
-export const tasksReducer = slice.reducer
+// state => state.tasks
 
+export const tasksSlice = slice.reducer
 
 ////////// TYPES
 

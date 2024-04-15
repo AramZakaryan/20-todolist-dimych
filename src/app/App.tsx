@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect} from 'react'
-import './App.css'
-import {TodolistsList} from 'features/TodolistsList'
+import {TodolistsList} from 'features/todolistsList'
 import {ErrorSnackbar} from 'components/ErrorSnackbar/ErrorSnackbar'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType, useAction} from './store'

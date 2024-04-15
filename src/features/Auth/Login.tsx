@@ -1,47 +1,12 @@
 import React from 'react'
-import {useFormik} from 'formik'
-import {useSelector} from 'react-redux'
-import {authActions, selectIsLoggedIn} from 'features/Auth'
-import {AppRootStateType} from 'app/store'
 import {Navigate} from 'react-router-dom'
-import {useAppDispatch} from 'hooks/useAppDispatch';
 import {Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField} from '@mui/material'
+import {useLogin} from "features/Auth/lib/useLogin";
+
 
 export const Login = () => {
-    const dispatch = useAppDispatch()
 
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(selectIsLoggedIn);
-
-    const formik = useFormik({
-        validate: (values) => {
-            if (!values.email) {
-                return {
-                    email: 'Email is required'
-                }
-            }
-            if (!values.password) {
-                return {
-                    password: 'Password is required'
-                }
-            }
-
-        },
-        initialValues: {
-            email: '',
-            password: '',
-            rememberMe: false
-        },
-        onSubmit: async (values, formikHelpers) => {
-            const res = await dispatch(authActions.loginTC(values))
-            if (authActions.loginTC.rejected.match(res)) {
-                console.log(res)
-                if (res.payload?.fieldsErrors?.length) {
-                    const error = res.payload?.fieldsErrors[0]
-                    formikHelpers.setFieldError(error?.field, error.error)
-                }
-            }
-        },
-    })
+    const {formik, isLoggedIn}= useLogin()
 
     if (isLoggedIn) {
         return <Navigate to={"/"}/>

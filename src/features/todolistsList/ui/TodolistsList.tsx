@@ -1,46 +1,39 @@
 import React, {useEffect} from 'react'
 import {useSelector} from 'react-redux'
 import {AppRootStateType, useAction} from 'app/store'
-import {TodolistDomainType} from './todolists-reducer'
-import {Grid, Paper} from '@mui/material'
+import {TodolistDomainType} from 'features/todolistsList/model/todolists/todolistsSlice'
+import {Grid} from '@mui/material'
 import {AddItemForm} from 'components/AddItemForm/AddItemForm'
-import {Todolist} from './Todolist/Todolist'
+import {Todolist} from 'features/todolistsList/ui/Todolist/Todolist'
 import {Navigate} from 'react-router-dom'
 import {selectIsLoggedIn} from "features/Auth";
-import {TasksStateType} from "features/TodolistsList/tasks-reducer";
-import {todolistsActions} from "features/TodolistsList";
+import {TasksStateType} from "features/todolistsList/model/tasks/tasksSlice";
+import {todolistsActions} from "features/todolistsList/index";
 
-type PropsType = {
+type Props = {
     demo?: boolean
 }
 
-export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
+export const TodolistsList = ({demo = false}: Props) => {
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(selectIsLoggedIn)
 
 
     const {
-        /** ZA: addTodolist BoundAction based on addTodolistTC */
-        addTodolistTC: addTodolistBoundAction,
-        /** ZA: fetchTodolists BoundAction based on fetchTodolistsTC */
-        fetchTodolistsTC: fetchTodolistsBoundAction,
+        addTodolist,
+        fetchTodolists,
     } = useAction(todolistsActions)
 
-    const addItemHandler = async (title: string) => addTodolistBoundAction(title)
-
-
     useEffect(() => {
-        if (demo || !isLoggedIn) {
-            return;
-        }
-        fetchTodolistsBoundAction()
-        // dispatch(fetchTodolistsTC())
+        if (demo || !isLoggedIn) return;
+        fetchTodolists()
     }, [])
 
-    if (!isLoggedIn) {
-        return <Navigate to={"/login"}/>
-    }
+
+    const addItemHandler = async (title: string) => addTodolist(title)
+
+    if (!isLoggedIn) return <Navigate to={"/login"}/>
 
     return <>
         <Grid container style={{padding: '20px'}}>
@@ -50,7 +43,6 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
             {
                 todolists.map(tl => {
                     let allTodolistTasks = tasks[tl.id]
-
                     return <Grid item key={tl.id}>
                         <div style={{width: "300px"}}>
                             <Todolist

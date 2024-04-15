@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {authAPI} from "api/todolists-api";
 import {setIsLoggedInAC} from "features/Auth";
+import {authAPI} from "features/Auth/authApi";
 
 //////////// THUNKS
 
