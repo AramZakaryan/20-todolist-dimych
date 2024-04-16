@@ -10,6 +10,4 @@ export const initializeAppTC = createAsyncThunk("app/initializeApp",
         if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC({isLoggedIn: true}));
         }
-        // return
-        // dispatch(setAppInitializedAC({value: true}));
     })

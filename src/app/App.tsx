@@ -3,7 +3,7 @@ import {TodolistsList} from 'features/todolistsList'
 import {ErrorSnackbar} from 'components/ErrorSnackbar/ErrorSnackbar'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType, useAction} from './store'
-import {RequestStatusType} from './app-reducer'
+import {RequestStatusType} from 'app/appSlice'
 import {appActions} from "app"
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import {authActions, Login} from 'features/Auth'

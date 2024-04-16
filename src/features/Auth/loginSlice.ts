@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {loginTC, logoutTC} from "features/Auth/login-actions";
+import {loginTC, logoutTC} from "features/Auth/loginActions";
 
 const slice = createSlice({
     name: "auth",
@@ -15,13 +15,14 @@ const slice = createSlice({
     extraReducers: builder => {
         builder
             .addCase(loginTC.fulfilled, (state) => {
-                // state.isLoggedIn = action.payload.isLoggedIn
                 state.isLoggedIn = true
             })
             .addCase(logoutTC.fulfilled, (state) => {
                 state.isLoggedIn = false
             })
+
     }
+
 })
 
 export const loginReducer = slice.reducer

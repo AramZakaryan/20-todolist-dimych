@@ -1,8 +1,8 @@
-import * as appAsyncActions from "./app-actions"
-import {setAppErrorAC, setAppStatusAC} from "./app-reducer"
+import * as appAsyncActions from "app/appActions"
+import {setAppErrorAC, setAppStatusAC} from "app/appSlice"
 
 const appActions = {...appAsyncActions, setAppErrorAC, setAppStatusAC}
 
 export {appActions}
 
-export * as appSelectors from "./app-selectors"
+export * as appSelectors from "app/appSelectors"

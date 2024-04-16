@@ -2,7 +2,7 @@ import {tasksSlice} from 'features/todolistsList/model/tasks/tasksSlice';
 import {todolistsSlice} from 'features/todolistsList/model/todolists/todolistsSlice';
 import {ActionCreatorsMapObject, bindActionCreators, combineReducers} from 'redux'
 import {thunk as thunkMiddleware, ThunkAction} from 'redux-thunk'
-import {appReducer} from './app-reducer'
+import {appSlice} from 'app/appSlice'
 import {loginReducer} from 'features/Auth'
 import {configureStore, UnknownAction} from "@reduxjs/toolkit";
 import {useDispatch} from "react-redux";
@@ -11,7 +11,7 @@ import {useMemo} from "react";
 const rootReducer = combineReducers({
     tasks: tasksSlice,
     todolists: todolistsSlice,
-    app: appReducer,
+    app: appSlice,
     auth: loginReducer
 })
 

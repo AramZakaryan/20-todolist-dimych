@@ -1,12 +1,12 @@
-import * as authActions from "./login-actions";
+import * as authActions from "features/Auth/loginActions";
 
 export {authActions}
 
 export {
     selectIsLoggedIn
-} from "./auth-selectors"
+} from "features/Auth/authSelectors"
 
 export {Login} from './Login'
-export * from "./login-reducer"
+export * from "features/Auth/loginSlice"
 
-export * as authSelectors from "./auth-selectors"
+export * as authSelectors from "features/Auth/authSelectors"
