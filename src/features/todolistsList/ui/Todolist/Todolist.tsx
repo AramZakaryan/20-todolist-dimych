@@ -76,6 +76,8 @@ export const Todolist = React.memo(function ({demo = false, ...props}: Props) {
         </IconButton>
         <h3><EditableSpan value={props.todolist.title} onChange={changeTodolistTitleHandler}/>
         </h3>
+
+
         <AddItemForm addItem={addTaskHandler} disabled={props.todolist.entityStatus === 'loading'}/>
         <div>
             {
