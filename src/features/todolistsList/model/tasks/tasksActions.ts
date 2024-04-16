@@ -35,8 +35,8 @@ export const addTask = createAsyncThunk("task/addTask",
                 // const action = addTaskAC({task})
                 // thunkAPI.dispatch(action)
             } else {
-                handleServerAppError(res.data, dispatch);
-                return rejectWithValue({})
+                handleServerAppError(res.data, dispatch, false);
+                return rejectWithValue(res.data)
             }
         } catch (error) {
             handleServerNetworkError(error as AxiosError, dispatch)

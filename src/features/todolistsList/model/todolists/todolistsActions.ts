@@ -36,8 +36,8 @@ export const addTodolist = createAsyncThunk("todolist/addTodolist",
                 dispatch(setAppStatusAC({status: 'succeeded'}));
                 return {todolist: res.data.data.item};
             } else {
-                handleServerAppError(res.data, dispatch);
-                return rejectWithValue(null)
+                handleServerAppError(res.data, dispatch, false);
+                return rejectWithValue(res.data)
             }
         } catch (error) {
             handleServerNetworkError(error as AxiosError, dispatch);
