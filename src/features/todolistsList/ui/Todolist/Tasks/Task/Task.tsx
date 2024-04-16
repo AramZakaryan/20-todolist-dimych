@@ -4,7 +4,7 @@ import {EditableSpan} from 'components/EditableSpan/EditableSpan'
 import {Delete} from '@mui/icons-material'
 import {useAction} from "app/store";
 import {tasksActions} from "features/todolistsList/index";
-import s from "./Task.module.css"
+import s from "features/todolistsList/ui/Todolist/Tasks/Task/Task.module.css"
 
 import {TaskStatuses, TaskType} from "features/todolistsList/api/tasksApi/tasksApi.types";
 
