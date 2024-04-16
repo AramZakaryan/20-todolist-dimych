@@ -21,6 +21,7 @@ const slice = createSlice({
                 state.isLoggedIn = false
             })
 
+
     }
 
 })

@@ -1,5 +1,5 @@
 import {RequestStatusType} from 'app/appSlice'
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createSlice, isRejected, PayloadAction} from "@reduxjs/toolkit";
 import {clearTasksAndTodolists} from "common/actions/common.actions";
 import {
     addTodolist,
@@ -8,6 +8,7 @@ import {
     removeTodolist
 } from "features/todolistsList/model/todolists/todolistsActions";
 import {TodolistType} from "features/todolistsList/api/todolistsApi/todolistsApi.types";
+import {todolistsActions} from "features/todolistsList/index";
 
 const slice = createSlice({
     name: "todolist",
@@ -62,6 +63,19 @@ const slice = createSlice({
                     state[index].title = action.payload.title
                 }
             })
+            .addMatcher(
+                isRejected(removeTodolist),
+                (state, action:any) => {
+                    const index = state.findIndex(el =>
+                        el.id === action.meta.arg
+                    )
+                    if (index > -1) {
+                        state[index].entityStatus = "failed"
+                    }
+
+
+                }
+            )
     },
 })
 

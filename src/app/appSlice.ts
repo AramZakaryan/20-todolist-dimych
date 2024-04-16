@@ -1,6 +1,7 @@
 import {Action, createSlice, isFulfilled, isPending, isRejected, PayloadAction, UnknownAction} from "@reduxjs/toolkit";
 import {initializeAppTC} from "app/appActions";
 import {addTodolist, changeTodolistTitle} from "features/todolistsList/model/todolists/todolistsActions";
+import {tasksActions, todolistsActions} from "features/todolistsList";
 
 export const initialState = {
     status: 'idle' as RequestStatusType,
@@ -46,9 +47,21 @@ const slice = createSlice({
             )
             .addMatcher(
                 isRejected,
-                (state, action) => {
+                (state, action: any) => {
                     state.status = "failed"
-                    state.error = action.error.message || null
+                    if (action.type === todolistsActions.addTodolist.rejected.type ||
+                        // "todolist/addTodolist/rejected" ||
+                    action.type ===tasksActions.addTask.rejected.type
+                        // "task/addTask/rejected"
+                    ) return
+
+                    if (action.payload) {
+                        state.error = action.payload?.messages[0]
+                    }else {
+                        state.error = action.error.message
+                    }
+
+                    console.log(action)
                 }
             )
     }

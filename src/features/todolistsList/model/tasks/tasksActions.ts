@@ -1,7 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {AppRootStateType} from "app/store";
-import {handleServerAppError, handleServerNetworkError} from "utils/error-utils";
-import {AxiosError} from "axios";
 import {UpdateDomainTaskModelType} from "features/todolistsList/model/tasks/tasksSlice";
 import {tasksApi} from "features/todolistsList/api/tasksApi/tasksApi";
 import {UpdateTaskModel} from "features/todolistsList/api/tasksApi/tasksApi.types";
@@ -28,7 +26,6 @@ export const addTask = createAsyncThunk("task/addTask",
                 const task = res.data.data.item
                 return {task}
             } else {
-                handleServerAppError(res.data, dispatch, false);
                 return rejectWithValue(res.data)
             }
     })
@@ -40,7 +37,7 @@ export const updateTask = createAsyncThunk("task/updateTask",
         if (!task) {
             //throw new Error("task not found in the state");
             console.warn('task not found in the state')
-            return rejectWithValue({})
+            return rejectWithValue('task not found in the state')
         }
 
         const apiModel: UpdateTaskModel = {
@@ -57,8 +54,7 @@ export const updateTask = createAsyncThunk("task/updateTask",
             if (res.data.resultCode === 0) {
                 return {taskId, model, todolistId}
             } else {
-                handleServerAppError(res.data, dispatch);
-                return rejectWithValue({})
+                return rejectWithValue(res.data)
             }
     })
 
